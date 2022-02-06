@@ -20,6 +20,7 @@ export class UI extends Phaser.GameObjects.Container {
 
 	private clockBg: RoundRectangle;
 	private clock: Phaser.GameObjects.Sprite;
+	private clockShine: Phaser.GameObjects.Sprite;
 
 	private health: Phaser.GameObjects.Container;
 	private healthBox: Phaser.GameObjects.Image;
@@ -85,6 +86,12 @@ export class UI extends Phaser.GameObjects.Container {
 		this.clockBg = new RoundRectangle(scene, this.clock.x, this.clock.y, rrw, this.clock.displayHeight+PAD, 10, 0x3a3a3a);
 		this.add(this.clockBg);
 		this.moveDown(this.clockBg);
+
+		this.clockShine = scene.add.sprite(this.clock.x, this.clock.y, "ui_clock_shine", 0);
+		this.clockShine.setScale(0.5);
+		this.clockShine.setAlpha(0.5);
+		this.clockShine.setBlendMode(Phaser.BlendModes.SCREEN);
+		this.add(this.clockShine);
 
 
 		// Boss health
@@ -223,13 +230,16 @@ export class UI extends Phaser.GameObjects.Container {
 	}
 
 
-	update(time: number, delta: number, dayTimeSmooth: number) {
+	update(time: number, delta: number, dayTimeSmooth: number, lastDayTimeSwap: number) {
 
 		this.outlineDay.setAlpha(0.25 * (dayTimeSmooth));
 		this.outlineNight.setAlpha(0.25 * (1 - dayTimeSmooth));
 
 		this.clock.setFrame(this.scene.dayTime ? 0 : 1);
 
+		// this.clockShine.setFrame( Math.round(dayTimeSmooth * 23) );
+		let timeSinceSwap = time - lastDayTimeSwap;
+		timeSinceSwap < (1/60*23) && this.clockShine.setFrame( Math.round( timeSinceSwap * 60) );
 
 		// Health
 

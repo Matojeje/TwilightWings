@@ -36,6 +36,7 @@ export class GameScene extends BaseScene {
 	public dayTime: boolean; // Day is true, Night is false
 	public dayTimeLinear: number;
 	public dayTimeSmooth: number;
+	public lastDayTimeSwap: number;
 
 	public prevTime: number;
 	public prevBarTime: number;
@@ -98,6 +99,7 @@ export class GameScene extends BaseScene {
 		// Vars
 		this.prevTime = 0;
 		this.prevBarTime = 0;
+		this.lastDayTimeSwap = 0;
 		this.introPlaying = false;
 		this.outroPlaying = false;
 		this.dayTime = true;
@@ -264,7 +266,7 @@ export class GameScene extends BaseScene {
 
 
 		this.background.update(time, delta, this.dayTimeSmooth);
-		this.ui.update(time, delta, this.dayTimeSmooth);
+		this.ui.update(time, delta, this.dayTimeSmooth, this.lastDayTimeSwap);
 
 
 		this.player.update(time, delta);
@@ -566,6 +568,7 @@ export class GameScene extends BaseScene {
 
 		if (this.player.alive && this.isRunning && (this.dayTime ? 1 : 0) == this.dayTimeLinear) {
 			this.dayTime = !this.dayTime;
+			this.lastDayTimeSwap = this.prevTime;
 			this.player.onDayToggle();
 			// this.sounds.bong.play();
 

@@ -94,6 +94,7 @@ const images: Asset[] = [
 /* Spritesheets */
 
 import ui_clock from "../assets/images/ui/ui_clock.png";
+import ui_clock_shine from "../assets/images/ui/ui_clock_shine.png";
 
 import player from "../assets/images/characters/player.png";
 
@@ -104,6 +105,7 @@ import feather from "../assets/images/feather.png";
 
 const spritesheets: SpriteSheet[] = [
 	{ key: "ui_clock",	path: ui_clock,		width: 400,	height: 320 },
+	{ key: "ui_clock_shine",	path: ui_clock_shine,		width: 400,	height: 320 },
 
 	{ key: "player",	path: player,		width: 256,	height: 256 },
 
